@@ -43,7 +43,7 @@ export const updateCartItem = async (cartItemId, quantity) => {
     return await AppDataSource.query(
       `
       UPDATE cart_items 
-      SET quantity = ?, updated_at = NOW()
+      SET quantity = ?
       WHERE id = ?`,
       [quantity, cartItemId]
     );
