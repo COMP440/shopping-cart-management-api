@@ -2,7 +2,7 @@ import * as cartService from "../services/cartService";
 
 export const getCartItems = async (req, res, next) => {
   try {
-    const { user_id } = req.body;
+    const user_id = req.query.user_id;
 
     const cartItems = await cartService.getCartItems(user_id);
 
