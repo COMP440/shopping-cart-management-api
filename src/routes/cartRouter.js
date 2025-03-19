@@ -7,5 +7,6 @@ cartRouter.get("/", cartController.getCartItems);
 cartRouter.post("/", cartController.addToCart);
 cartRouter.patch("/:cartItemId(\\d+)", cartController.updateCartItem);
 cartRouter.delete("/:cartItemId(\\d+)", cartController.removeCartItem);
+cartRouter.post("/order", cartController.placeOrder);
 
 export default cartRouter;

@@ -48,3 +48,15 @@ export const removeCartItem = async (req, res, next) => {
     next(error);
   }
 };
+
+export const placeOrder = async (req, res, next) => {
+  try {
+    const { user_id } = req.body;
+
+    await cartService.placeOrder(user_id);
+
+    res.status(200).json({ message: "Order placed successfully" });
+  } catch (error) {
+    next(error);
+  }
+};

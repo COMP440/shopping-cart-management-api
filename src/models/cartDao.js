@@ -61,3 +61,16 @@ export const removeCartItem = async (cartItemId) => {
     throw new Error("Failed to remove cart item");
   }
 };
+
+export const placeOrder = async (user_id) => {
+  try {
+    return await AppDataSource.query(
+      `
+      DELETE FROM cart_items
+      WHERE user_id = ?`,
+      [user_id]
+    );
+  } catch {
+    throw new Error("Failed to place order");
+  }
+};

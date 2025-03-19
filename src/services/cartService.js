@@ -1,4 +1,5 @@
 import * as cartDao from "../models/cartDao";
+import * as productDao from "../models/productDao";
 
 export const getCartItems = async (user_id) => {
   try {
@@ -56,5 +57,26 @@ export const removeCartItem = async (cartItemId) => {
     return await cartDao.removeCartItem(cartItemId);
   } catch {
     throw new Error("Failed to remove cart item");
+  }
+};
+
+export const placeOrder = async (user_id) => {
+  try {
+    const cartItems = await cartDao.getCartItems(user_id);
+
+    for (const item of cartItems) {
+      const productData = await productDao.getProductById(item.product_id);
+      if (productData.length > 0) {
+        const product = productData[0];
+        const inventory = product.inventory - item.quantity;
+        await productDao.updateProductInventory(item.product_id, inventory);
+      } else {
+        console.error("There is no product");
+      }
+    }
+
+    return await cartDao.placeOrder(user_id);
+  } catch {
+    throw new Error("Failed to place order");
   }
 };
